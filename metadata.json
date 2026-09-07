@@ -1,0 +1,5 @@
+{
+  "name": "VIXY ARENA",
+  "description": "The intelligence terminal for prediction markets. One board for every category \u2014 sports, politics, weather, crypto, macro, entertainment, world events \u2014 with VIXY's own probability beside every market price, and Arena Vision, which reads any market screenshot. Virtual points only; no wagering. This build runs on a clearly labeled demo data provider and a preview account; no venue, model, billing or account backend is connected.",
+  "requestFramePermissions": []
+}

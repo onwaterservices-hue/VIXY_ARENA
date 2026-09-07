@@ -1,0 +1,98 @@
+/* =============================================================
+   VIXY ARENA — DESIGN TOKENS
+   Single source of truth. No component may introduce a raw hex,
+   a raw px spacing value, or an ad-hoc shadow.
+   ============================================================= */
+
+:root {
+  /* ---- FOUNDATION ------------------------------------------ */
+  --vx-void:        #04050b;
+  --vx-abyss:       #070a16;
+  --vx-deep:        #0a0e20;
+  --vx-panel:       #0d1226;
+  --vx-raised:      #121834;
+
+  /* ---- VIXY SPECTRUM --------------------------------------- */
+  --vx-violet:      #8a5cff;   /* primary identity              */
+  --vx-violet-hi:   #b18cff;   /* ultraviolet highlight         */
+  --vx-violet-lo:   #5b32c9;
+  --vx-indigo:      #3a2a8c;
+  --vx-blue:        #3d7bff;   /* electric blue                 */
+  --vx-cyan:        #37e4f5;   /* telemetry / data              */
+  --vx-lavender:    #cbc6ff;
+
+  /* ---- INFORMATION COLOR (used sparingly, as meaning) ------- */
+  --vx-edge:        #2be8a5;   /* positive edge / confirmed     */
+  --vx-warn:        #ffb020;   /* caution / degraded            */
+  --vx-risk:        #ff5470;   /* risk / offline                */
+  --vx-neutral:     #7d84b0;   /* wait / unknown                */
+
+  /* ---- TEXT ------------------------------------------------- */
+  --vx-t1:          #eaebff;
+  --vx-t2:          #99a0cc;
+  --vx-t3:          #838ab8;
+  --vx-t4:          #767dab;
+
+  /* ---- LINES ------------------------------------------------ */
+  --vx-hair:        rgba(160, 172, 255, 0.10);
+  --vx-hair-str:    rgba(160, 172, 255, 0.18);
+  --vx-hair-hot:    rgba(138, 92, 255, 0.42);
+  --vx-grid:        rgba(120, 140, 255, 0.055);
+
+  /* ---- GLASS MATERIALS -------------------------------------- */
+  --glass-01-bg:    linear-gradient(180deg, rgba(24,29,58,0.44) 0%, rgba(9,12,28,0.52) 100%);
+  --glass-01-blur:  10px;
+  --glass-02-bg:    linear-gradient(180deg, rgba(28,34,68,0.60) 0%, rgba(10,14,32,0.72) 100%);
+  --glass-02-blur:  16px;
+  --glass-03-bg:    linear-gradient(180deg, rgba(60,44,140,0.42) 0%, rgba(16,18,46,0.78) 100%);
+  --glass-03-blur:  22px;
+
+  /* ---- ELEVATION -------------------------------------------- */
+  --lift-0:  none;
+  --lift-1:  0 1px 0 rgba(255,255,255,0.05) inset, 0 8px 24px -12px rgba(0,0,0,0.9);
+  --lift-2:  0 1px 0 rgba(255,255,255,0.06) inset, 0 18px 50px -20px rgba(0,0,0,0.92);
+  --lift-3:  0 1px 0 rgba(255,255,255,0.08) inset, 0 32px 90px -28px rgba(0,0,0,0.95);
+  --bloom-violet: 0 0 0 1px rgba(138,92,255,0.30), 0 0 34px -6px rgba(138,92,255,0.42);
+  --bloom-cyan:   0 0 0 1px rgba(55,228,245,0.26), 0 0 30px -8px rgba(55,228,245,0.36);
+  --bloom-edge:   0 0 0 1px rgba(43,232,165,0.26), 0 0 30px -8px rgba(43,232,165,0.30);
+
+  /* ---- SPACE ------------------------------------------------ */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px; --s-5: 20px;
+  --s-6: 24px; --s-7: 32px; --s-8: 40px; --s-9: 56px; --s-10: 72px;
+
+  /* ---- RADIUS (engineered, not pill-everything) ------------- */
+  --r-1: 2px; --r-2: 4px; --r-3: 8px; --r-4: 14px; --r-5: 20px; --r-full: 999px;
+
+  /* ---- TYPE ------------------------------------------------- */
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter",
+                  "Segoe UI", Roboto, system-ui, sans-serif;
+  --font-mono: "SF Mono", ui-monospace, "JetBrains Mono", "IBM Plex Mono",
+               Menlo, Consolas, monospace;
+
+  --t-hero:   clamp(38px, 5.4vw, 72px);
+  --t-h1:     clamp(24px, 2.4vw, 32px);
+  --t-h2:     19px;
+  --t-h3:     15px;
+  --t-body:   13.5px;
+  --t-small:  12px;
+  --t-micro:  10.5px;
+  --t-nano:   9.5px;
+
+  /* ---- MOTION (reserved for meaning, never decoration) ------ */
+  --m-fast:   140ms;
+  --m-base:   240ms;
+  --m-slow:   420ms;
+  --m-scene:  720ms;
+  --ease:     cubic-bezier(0.22, 0.61, 0.24, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ---- SHELL METRICS ---------------------------------------- */
+  --rail-w:      98px;
+  --bar-h:       58px;
+  --intel-w:     332px;
+  --telemetry-h: 26px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --m-fast: 1ms; --m-base: 1ms; --m-slow: 1ms; --m-scene: 1ms; }
+}

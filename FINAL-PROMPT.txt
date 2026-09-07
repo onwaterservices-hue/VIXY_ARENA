@@ -1,0 +1,48 @@
+VIXY ARENA — FINAL FREEZE + PRODUCTION VERIFICATION. Read this whole prompt before touching a file.
+
+THE RULE
+The design is frozen as of the build in Desktop/VIXY ARENA/app (2026-09-05). Do not add screens, features, tabs, widgets or redesigns. Do not change any screen the audit marked WOW (Landing, Arena, Portfolio, VIXY Brain). Your job is to make the door real, make the production build real, and PROVE both. If you find yourself improving a layout, stop.
+
+WHAT “PRODUCTION-READY” MEANS — do not declare it until every line is real and has a verification artifact:
+ 1. Account creation persisted server-side.
+ 2. Secure authentication and session handling (httpOnly, secure, sameSite cookie or equivalent; password hashing server-side with argon2id or bcrypt; rate-limited sign-in).
+ 3. Password reset (request → emailed single-use token with expiry → set new password). UI + endpoint + contract in types/.
+ 4. Stripe: leave the webhook for me to plug in. Write the handler skeleton (signature verification stub, idempotent event table, one function `grantEntitlement(userId, stripeCustomerId, subscriptionId, currentPeriodEnd)`) and the entitlement table so plugging in is one function. A Payment Link starts a payment; it is NOT entitlement. Entitlement is written by the backend when the verified Stripe event arrives and read back by BillingSource.load().
+ 5. Entitlement stored server-side and read via GET /api/billing/entitlement.
+ 6. Discord OAuth on the server: verify guild membership (and role if I give you one). `discordVerified` comes ONLY from that verification. The client’s “I’ve joined” button just re-checks.
+ 7. Terminal access decided server-side: GET /api/auth/session returns { session, access: { stage, paid, discordJoined, discordVerified } }. The server computes stage. The client renders it and never computes it (already true — keep it true).
+ 8. Logout (server invalidates the session) and session expiry (idle + absolute) with a client that re-checks and drops to the door.
+ 9. Every API route protected: auth required on everything except signup/signin/reset/session; the terminal snapshot, SSE stream, scan and calls endpoints refuse (401/403) any session whose stage is not OPEN. Verify with request logs.
+10. No client-side unlock. previewUnlock, LocalPreviewAuthSource, PreviewAccountSource, DemoDataSource and every DEMO string must be absent from the production bundle.
+
+FAIL CLOSED — this is a change in behaviour, make it deliberately:
+ - Today UnconfiguredAuthSource reports stage OPEN, a failed auth load() becomes UNAVAILABLE + OPEN (hooks/index.ts:134), and billing NOT_CONFIGURED/UNAVAILABLE counts as entitled. In production every one of those must NOT render the board. Render a “Can’t verify your access right now” state with a retry — never the terminal, never a fake lock that pretends a decision was made.
+ - The server is the layer that refuses; the client just doesn’t draw what it wasn’t given.
+
+MAKE THE PRODUCTION BUILD EXIST — verified today, DEMO_MODE=false renders a blank black page on every route:
+ - Turn DEMO_MODE, AUTH_BASE_URL, BILLING_BASE_URL, ACCOUNT_BASE_URL, ENGINE_BASE_URL, PAYMENT_LINK_URL, DISCORD_INVITE_URL into build-time env (import.meta.env.VITE_*). No secrets in the client, ever.
+ - Add a top-level error boundary that renders the existing “Data source unavailable” state instead of a black screen. An exception in a data source must never blank the app.
+ - LiveEngineDataSource.subscribe must not throw from an effect; unreachable engine → status OFFLINE/UNKNOWN in the health envelope, shown honestly.
+ - Bundle React (vite build) and remove the aistudiocdn import map from the production index.html.
+ - Add `npm run verify:prod`: builds with DEMO_MODE=false, then FAILS if dist/ contains any of: "Simulate a confirmed payment", "PREVIEW ACCOUNT", "vixy_arena_preview", "DemoDataSource", "demo-sim", "simulatedPaid", "Reset preview account", "SIMULATED READ" (the last one only once the real Vision reader exists — until then it must remain and be exempt).
+
+FIX THESE BUGS (no redesign):
+ - tsc --noEmit must be clean: services/mock/seed.ts:70 (delete the dead CATEGORY_LABEL export or complete the Record), services/mock/demoProvider.ts:423 (origin must be DataOrigin).
+ - One health envelope: the Live screen shows “DEGRADED FEEDS 0 · all sources fresh” under a “1 source degraded” banner. Every surface reads the same server-computed health.
+ - Telemetry: in DEMO builds a simulated source must read SIMULATED, never LIVE. In production the status is the server’s.
+ - Landing hero: the tracked/matched/calibration stat row must carry the same origin badge as the market wall, and in production the calibration figure is hidden until the engine reports a settled sample ≥ the threshold you define in the engine, not the client.
+ - Mobile All Markets (390×844): collapse the stack above the board (degraded banner, “New here?”, Daily Slate strip, filter block) to one strip so the first market card is visible without scrolling. Copy and stacking only.
+ - Locked screen on mobile: “MARKET PRICES UNLOCK WITH THE TERMINAL” wraps to three lines in the header; shorten it.
+
+ARENA VISION (the signature feature):
+ - Replace the demo reader with the real pipeline behind POST /api/scan: image → market identification → live market fetch → engine read → verdict with provenance. Until that endpoint is real, the SIMULATED READ label stays on the result card. Never remove the label before the reader is real. Never fabricate a read.
+
+PROOF — attach for every item; a claim without an artifact does not count:
+ - Screenshots at 390×844 and 1440×900 of: fresh door, locked (unlock stage), locked (discord stage), access, board, and the “can’t verify” state with the auth API down — from the DEMO_MODE=false build.
+ - Repeat the leak check on both locked stages at 1440 and 1720 wide: the only percentage allowed is the engine’s own calibration, and only if the badge says LIVE.
+ - `npm run check` (invariant suite) green, `tsc --noEmit` clean, `npm run verify:prod` green — paste outputs.
+ - Request logs showing 401/403 on /api/snapshot, /api/scan, /api/calls for: no session; session at stage UNLOCK; session at stage JOIN_DISCORD. And 200 for stage OPEN.
+ - Log lines showing session expiry dropping a client to the door.
+ - The Stripe handler skeleton and entitlement table, with the single plug-in function named.
+
+DO NOT: deploy; touch VIXY VAULT production or share any of its credentials, Firebase projects or Stripe accounts; invent secrets; add a screen; remove a DEMO/SIMULATED label to make something look finished; describe anything as LIVE that a server did not report as LIVE. Save to AI Studio (Save, never Publish) only after the artifacts above exist.

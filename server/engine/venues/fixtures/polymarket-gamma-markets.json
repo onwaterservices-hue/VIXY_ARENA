@@ -1,0 +1,199 @@
+{
+ "capturedAt": "2026-09-06T02:00:00Z",
+ "source": "GET https://gamma-api.polymarket.com/markets?limit=6&active=true&closed=false&order=volume24hr&ascending=false (captured through the operator's browser)",
+ "markets": [
+  {
+   "id": "2252243",
+   "question": "Will the Fed decrease interest rates by 25 bps after the September 2026 meeting?",
+   "conditionId": "0xac02cbb049e46d6a3627c0fdf52fa554982a9025d45968207b362acb6ca4b830",
+   "slug": "will-the-fed-decrease-interest-rates-by-25-bps-after-the-september-2026-meeting-586",
+   "endDate": "2026-09-16T00:00:00Z",
+   "startDate": "2026-05-13T21:23:11.486586Z",
+   "active": true,
+   "closed": false,
+   "outcomes": "[\"Yes\", \"No\"]",
+   "outcomePrices": "[\"0.0035\", \"0.9965\"]",
+   "volume": "30536015.89265599",
+   "volume24hr": 1321337.593664,
+   "liquidity": "3100491.75532",
+   "bestBid": 0.003,
+   "bestAsk": 0.004,
+   "lastTradePrice": 0.003,
+   "spread": 0.001,
+   "groupItemTitle": "25 bps decrease",
+   "description": "The FED interest rates are defined in this market by the upper bound of the target federal funds range. The decisions on the target federal funds range are made by the Federal Open Market Committee (FOMC) meetings.\n\nThis",
+   "events": [
+    {
+     "id": "481717",
+     "title": "Fed Decision in September?",
+     "slug": "fed-decision-in-september-762",
+     "category": null
+    }
+   ],
+   "updatedAt": "2026-09-06T02:00:13.955887Z",
+   "negRisk": true,
+   "acceptingOrders": true
+  },
+  {
+   "id": "4207672",
+   "question": "US Open ATP: Zizou Bergs vs Botic van de Zandschulp",
+   "conditionId": "0x90dab25da3664b7a341a6114a8c310ea526d578e1286ca97987ffb5207b8c939",
+   "slug": "atp-bergs-zandsch-2026-09-05",
+   "endDate": "2026-09-12T15:00:00Z",
+   "startDate": "2026-09-04T05:05:14Z",
+   "active": true,
+   "closed": false,
+   "outcomes": "[\"Zizou Bergs\", \"Botic van de Zandschulp\"]",
+   "outcomePrices": "[\"0.165\", \"0.835\"]",
+   "volume": "1248469.4391289977",
+   "volume24hr": 1236103.5551319993,
+   "liquidity": "25023.255",
+   "bestBid": 0.14,
+   "bestAsk": 0.19,
+   "lastTradePrice": 0.17,
+   "spread": 0.05,
+   "description": "This market refers to the tennis match between Zizou Bergs and Botic van de Zandschulp in the US Open ATP, originally scheduled for September 5, 2026 at 11:00AM ET.\n\nThis market will resolve to 'Zizou Bergs' if Zizou Ber",
+   "events": [
+    {
+     "id": "962869",
+     "title": "US Open ATP: Zizou Bergs vs Botic van de Zandschulp",
+     "slug": "atp-bergs-zandsch-2026-09-05",
+     "category": null
+    }
+   ],
+   "oneDayPriceChange": -0.18,
+   "updatedAt": "2026-09-06T02:00:13.955887Z",
+   "negRisk": false,
+   "acceptingOrders": true
+  },
+  {
+   "id": "4206019",
+   "question": "US Open WTA: Iva Jovic vs Alexandra Eala",
+   "conditionId": "0x09d4cd8adade97f8fe4b3407b162e796206007eab249bf05eed6837911fe321c",
+   "slug": "wta-jovic-eala-2026-09-05",
+   "endDate": "2026-09-12T15:00:00Z",
+   "startDate": "2026-09-04T04:14:13Z",
+   "active": true,
+   "closed": false,
+   "outcomes": "[\"Iva Jovic\", \"Alexandra Eala\"]",
+   "outcomePrices": "[\"0.275\", \"0.725\"]",
+   "volume": "825945.2584689996",
+   "volume24hr": 840501.6028810004,
+   "liquidity": "224911.2182",
+   "bestBid": 0.27,
+   "bestAsk": 0.28,
+   "lastTradePrice": 0.21,
+   "spread": 0.01,
+   "description": "This market refers to the tennis match between Iva Jovic and Alexandra Eala in the US Open WTA, originally scheduled for September 5, 2026 at 11:00AM ET.\n\nThis market will resolve to 'Iva Jovic' if Iva Jovic advances aga",
+   "events": [
+    {
+     "id": "962645",
+     "title": "US Open WTA: Iva Jovic vs Alexandra Eala",
+     "slug": "wta-jovic-eala-2026-09-05",
+     "category": null
+    }
+   ],
+   "oneDayPriceChange": -0.26,
+   "updatedAt": "2026-09-06T02:00:13.955887Z",
+   "negRisk": false,
+   "acceptingOrders": true
+  },
+  {
+   "id": "2252242",
+   "question": "Will the Fed decrease interest rates by 50+ bps after the September 2026 meeting?",
+   "conditionId": "0x5e464d85eb49f22d876f3ed6168a7db5e2288e9ae1eb91effd2758e994676f86",
+   "slug": "will-the-fed-decrease-interest-rates-by-50-bps-after-the-september-2026-meeting-863",
+   "endDate": "2026-09-16T00:00:00Z",
+   "startDate": "2026-05-13T21:23:09.737806Z",
+   "active": true,
+   "closed": false,
+   "outcomes": "[\"Yes\", \"No\"]",
+   "outcomePrices": "[\"0.0015\", \"0.9985\"]",
+   "volume": "13033983.300784998",
+   "volume24hr": 799909.145,
+   "liquidity": "885890.58608",
+   "bestBid": 0.001,
+   "bestAsk": 0.002,
+   "lastTradePrice": 0.002,
+   "spread": 0.001,
+   "groupItemTitle": "50+ bps decrease",
+   "description": "The FED interest rates are defined in this market by the upper bound of the target federal funds range. The decisions on the target federal funds range are made by the Federal Open Market Committee (FOMC) meetings.\n\nThis",
+   "events": [
+    {
+     "id": "481717",
+     "title": "Fed Decision in September?",
+     "slug": "fed-decision-in-september-762",
+     "category": null
+    }
+   ],
+   "updatedAt": "2026-09-06T02:00:13.955887Z",
+   "negRisk": true,
+   "acceptingOrders": true
+  },
+  {
+   "id": "4199300",
+   "question": "US Open WTA: Naomi Osaka vs Elise Mertens",
+   "conditionId": "0xc56ddcb3ebd56af0aef7d2b8f4a746eefd479f2c641889dc561a497c89f02aed",
+   "slug": "wta-osaka-mertens-2026-09-04",
+   "endDate": "2026-09-11T15:00:00Z",
+   "startDate": "2026-09-03T22:14:13Z",
+   "active": true,
+   "closed": false,
+   "outcomes": "[\"Naomi Osaka\", \"Elise Mertens\"]",
+   "outcomePrices": "[\"0.9995\", \"0.0005\"]",
+   "volume": "782948.9482549994",
+   "volume24hr": 781592.8206260004,
+   "liquidity": "1217936.07045",
+   "bestBid": 0.999,
+   "bestAsk": 1,
+   "lastTradePrice": 0.999,
+   "spread": 0.001,
+   "description": "This market refers to the tennis match between Naomi Osaka and Elise Mertens in the US Open WTA, originally scheduled for September 4, 2026 at 11:00AM ET.\n\nThis market will resolve to 'Naomi Osaka' if Naomi Osaka advance",
+   "events": [
+    {
+     "id": "961336",
+     "title": "US Open WTA: Naomi Osaka vs Elise Mertens",
+     "slug": "wta-osaka-mertens-2026-09-04",
+     "category": null
+    }
+   ],
+   "oneDayPriceChange": 0.2745,
+   "updatedAt": "2026-09-06T02:00:13.955887Z",
+   "negRisk": false,
+   "acceptingOrders": true
+  },
+  {
+   "id": "3816660",
+   "question": "Will Fluminense FC win on 2026-09-05?",
+   "conditionId": "0xd5de61655667803c9ae486211afa8542abe97f16f5643244cd7b17ae03fbca9b",
+   "slug": "bra-flu-vas-2026-09-05-flu",
+   "endDate": "2026-09-06T00:00:00Z",
+   "startDate": "2026-08-23T19:00:25Z",
+   "active": true,
+   "closed": false,
+   "outcomes": "[\"Yes\", \"No\"]",
+   "outcomePrices": "[\"0.995\", \"0.005\"]",
+   "volume": "542161.5059739996",
+   "volume24hr": 540365.030942,
+   "liquidity": "46812.5462",
+   "bestBid": 0.99,
+   "bestAsk": 1,
+   "lastTradePrice": 0.99,
+   "spread": 0.01,
+   "groupItemTitle": "Fluminense FC",
+   "description": "In the upcoming game, scheduled for September 5, 2026\nIf Fluminense FC wins, this market will resolve to \"Yes\".\nOtherwise, this market will resolve to \"No\".\nIf the game is postponed, this market will remain open until th",
+   "events": [
+    {
+     "id": "897218",
+     "title": "Fluminense FC vs. CR Vasco da Gama",
+     "slug": "bra-flu-vas-2026-09-05",
+     "category": null
+    }
+   ],
+   "oneDayPriceChange": 0.54,
+   "updatedAt": "2026-09-06T02:00:13.955887Z",
+   "negRisk": true,
+   "acceptingOrders": true
+  }
+ ]
+}

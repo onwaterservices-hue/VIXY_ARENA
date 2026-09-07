@@ -1,0 +1,137 @@
+/* =============================================================
+   VIXY ARENA — BASE
+   ============================================================= */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--vx-void);
+  color: var(--vx-t1);
+  font-family: var(--font-display);
+  font-size: var(--t-body);
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow: hidden;
+}
+
+/* Deep-space atmosphere. Three volumetric sources + vignette.
+   Fixed layer, never scrolls, never repaints on scroll. */
+.vx-atmosphere {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(880px 620px at 12% -8%,  rgba(138, 92, 255, 0.20), transparent 62%),
+    radial-gradient(760px 560px at 88% 4%,   rgba(61, 123, 255, 0.14), transparent 60%),
+    radial-gradient(1200px 700px at 50% 108%, rgba(55, 228, 245, 0.06), transparent 66%),
+    linear-gradient(180deg, var(--vx-abyss) 0%, var(--vx-void) 100%);
+}
+.vx-atmosphere::after {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(120% 100% at 50% 40%, transparent 44%, rgba(0,0,0,0.62) 100%);
+}
+
+h1, h2, h3, h4, p, figure { margin: 0; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+input, select { font: inherit; color: inherit; }
+canvas { display: block; }
+
+/* ---- TYPE ROLES ------------------------------------------- */
+.t-hero {
+  font-size: var(--t-hero); font-weight: 700; letter-spacing: -0.035em;
+  line-height: 0.94;
+}
+.t-h1 { font-size: var(--t-h1); font-weight: 620; letter-spacing: -0.022em; }
+.t-h2 { font-size: var(--t-h2); font-weight: 600; letter-spacing: -0.016em; }
+.t-h3 { font-size: var(--t-h3); font-weight: 600; letter-spacing: -0.008em; }
+.t-body { font-size: var(--t-body); }
+.t-small { font-size: var(--t-small); color: var(--vx-t2); }
+
+/* Technical labels — uppercase is reserved for metadata only. */
+.t-label {
+  font-family: var(--font-mono);
+  font-size: var(--t-micro);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--vx-t3);
+  font-weight: 500;
+}
+.t-mono  { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.t-num   { font-family: var(--font-mono); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+.t-nano  { font-family: var(--font-mono); font-size: var(--t-nano); letter-spacing: 0.14em;
+           text-transform: uppercase; color: var(--vx-t4); }
+
+.t-dim  { color: var(--vx-t2); }
+.t-dim2 { color: var(--vx-t3); }
+
+/* ---- SCROLL ------------------------------------------------ */
+.vx-scroll { overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin;
+             scrollbar-color: rgba(138,92,255,0.30) transparent; }
+.vx-scroll::-webkit-scrollbar { width: 9px; height: 9px; }
+.vx-scroll::-webkit-scrollbar-track { background: transparent; }
+.vx-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(138,92,255,0.42), rgba(61,123,255,0.28));
+  border-radius: var(--r-full); border: 2px solid transparent; background-clip: padding-box;
+}
+.vx-scroll::-webkit-scrollbar-thumb:hover { background: rgba(138,92,255,0.62); background-clip: padding-box; }
+
+/* ---- FOCUS (accessibility, from tokens) -------------------- */
+:focus-visible {
+  outline: 2px solid var(--vx-violet-hi);
+  outline-offset: 2px;
+  border-radius: var(--r-2);
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+/* A hidden list that is also a keyboard path has to become visible the
+   moment the keyboard reaches it — otherwise a sighted keyboard user is
+   tabbing through controls they cannot see. */
+ul.sr-only:focus-within {
+  position: absolute; z-index: 6; inset: auto var(--s-4) var(--s-4) var(--s-4);
+  width: auto; height: auto; max-height: 46%; margin: 0; padding: var(--s-3);
+  overflow: auto; clip: auto; white-space: normal;
+  display: flex; flex-direction: column; gap: 2px; list-style: none;
+  border-radius: var(--r-3); border: 1px solid var(--vx-hair-hot);
+  background: rgba(8,11,26,0.97); box-shadow: var(--lift-3);
+}
+ul.sr-only:focus-within button {
+  width: 100%; text-align: left; padding: 5px var(--s-2); border-radius: var(--r-2);
+  font-family: var(--font-mono); font-size: var(--t-nano); color: var(--vx-t2);
+}
+ul.sr-only:focus-within button:focus-visible,
+ul.sr-only:focus-within button[aria-pressed="true"] {
+  background: rgba(138,92,255,0.22); color: var(--vx-t1);
+}
+
+/* ---- UTILITY (layout only, no decoration) ------------------ */
+.row { display: flex; align-items: center; }
+.col { display: flex; flex-direction: column; }
+.between { justify-content: space-between; }
+.center { justify-content: center; align-items: center; }
+.wrap { flex-wrap: wrap; }
+.grow { flex: 1 1 auto; min-width: 0; min-height: 0; }
+.g1 { gap: var(--s-1); } .g2 { gap: var(--s-2); } .g3 { gap: var(--s-3); }
+.g4 { gap: var(--s-4); } .g5 { gap: var(--s-5); } .g6 { gap: var(--s-6); }
+.g7 { gap: var(--s-7); }
+
+/* ---- SKIP LINK --------------------------------------------- */
+.skip-link {
+  position: fixed; top: -60px; left: var(--s-4); z-index: 200;
+  padding: var(--s-2) var(--s-4); border-radius: var(--r-3);
+  background: var(--vx-violet); color: #fff; font-size: var(--t-small); font-weight: 600;
+  transition: top var(--m-base) var(--ease);
+}
+.skip-link:focus { top: var(--s-3); }
+
+
+/* Prose inside a panel keeps a readable measure. A line of body text
+   running the full width of a 1700px console is not readable, however
+   much room there is for it. */
+.holo-panel p, .panel-body > p, .notice p { max-width: 78ch; }

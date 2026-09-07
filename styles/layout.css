@@ -1,0 +1,185 @@
+/* =============================================================
+   VIXY ARENA — SHELL LAYOUT
+   Persistent frame: command bar, floating nav rail, workspace,
+   contextual intelligence rail, telemetry strip.
+   ============================================================= */
+
+.shell {
+  position: relative; z-index: 1;
+  height: 100vh; height: 100dvh;
+  display: grid;
+  grid-template-columns: var(--rail-w) minmax(0, 1fr);
+  grid-template-rows: var(--bar-h) minmax(0, 1fr) var(--telemetry-h);
+  grid-template-areas:
+    "bar  bar"
+    "rail main"
+    "tele tele";
+}
+.shell.has-intel {
+  grid-template-columns: var(--rail-w) minmax(0, 1fr) var(--intel-w);
+  grid-template-areas:
+    "bar  bar  bar"
+    "rail main intel"
+    "tele tele tele";
+}
+.shell.is-mobile {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: var(--bar-h) minmax(0, 1fr) calc(64px + env(safe-area-inset-bottom, 0px));
+  grid-template-areas: "bar" "main" "mnav";
+}
+
+.vx-atmosphere-canvas {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; width: 100%; height: 100%;
+}
+
+/* ---- COMMAND BAR ------------------------------------------- */
+.cmdbar {
+  grid-area: bar; position: relative; z-index: 30;
+  display: grid; grid-template-columns: minmax(230px, auto) minmax(0, 1fr) auto;
+  align-items: center; gap: var(--s-5);
+  padding: 0 var(--s-5) 0 var(--s-4);
+  background: linear-gradient(180deg, rgba(8,11,26,0.92), rgba(8,11,26,0.66));
+  border-bottom: 1px solid var(--vx-hair);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+}
+.cmdbar-left { min-width: 0; }
+.cmdbar-center {
+  display: flex; align-items: center; gap: var(--s-2);
+  /* `safe` keeps the first chip reachable: a centred flex row that
+     overflows clips BOTH ends, and the leftmost chip is the one the
+     reader expects to be there. */
+  justify-content: safe center; overflow-x: auto; overflow-y: hidden;
+  scrollbar-width: none; -ms-overflow-style: none;
+  overscroll-behavior-x: contain; scroll-snap-type: x proximity;
+}
+.cmdbar-center::-webkit-scrollbar { display: none; }
+.cmdbar-center > * { scroll-snap-align: start; }
+.cmdbar-right { justify-self: end; }
+.cmd-route { max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Horizontal scrollers fade their trailing edge so a half-visible
+   item reads as "scroll for more" rather than a clipped layout. */
+.vx-scroll-x {
+  overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none;
+  overscroll-behavior-x: contain;
+  -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 30px), transparent 100%);
+  mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 30px), transparent 100%);
+}
+.vx-scroll-x::-webkit-scrollbar { display: none; }
+/* no fade when nothing is clipped */
+@media (min-width: 1561px) { .cmdbar-center.vx-scroll-x { -webkit-mask-image: none; mask-image: none; } }
+
+/* ---- NAV RAIL ---------------------------------------------- */
+.rail {
+  grid-area: rail; position: relative; z-index: 20;
+  margin: var(--s-3) 0 var(--s-3) var(--s-3);
+  padding: var(--s-3) var(--s-2);
+  display: flex; flex-direction: column; gap: var(--s-2);
+  border-radius: var(--r-5);
+  overflow-y: auto; scrollbar-width: none;
+}
+.rail::-webkit-scrollbar { display: none; }
+.rail-group { display: flex; flex-direction: column; gap: 2px; }
+.rail-group-label {
+  padding: var(--s-3) 0 var(--s-2); text-align: center;
+  border-top: 1px solid var(--vx-hair); margin-top: var(--s-2);
+}
+.rail-sep { height: 1px; background: var(--vx-hair); margin: var(--s-2) var(--s-2); }
+
+.rail-item {
+  position: relative; display: flex; flex-direction: column; align-items: center;
+  gap: 5px; padding: var(--s-3) 4px var(--s-2); border-radius: var(--r-3); min-height: 58px;
+  color: var(--vx-t3);
+  transition: color var(--m-base) var(--ease), background var(--m-base) var(--ease);
+}
+.rail-item:hover { color: var(--vx-t1); background: rgba(138,92,255,0.08); }
+.rail-label { font-size: 9.5px; letter-spacing: 0.005em; font-weight: 560; line-height: 1.15;
+  text-align: center; max-width: 100%; hyphens: none; }
+.rail-item.is-active { color: var(--vx-t1); background: linear-gradient(180deg, rgba(138,92,255,0.22), rgba(138,92,255,0.06)); }
+.rail-item.is-active::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgba(138,92,255,0.42), 0 0 26px -10px rgba(138,92,255,0.85);
+}
+.rail-edge {
+  position: absolute; left: -9px; top: 50%; transform: translateY(-50%);
+  width: 3px; height: 26px; border-radius: var(--r-full);
+  background: linear-gradient(180deg, var(--vx-violet-hi), var(--vx-blue));
+  box-shadow: 0 0 14px 1px rgba(138,92,255,0.9);
+}
+.rail-glow { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; }
+
+/* ---- WORKSPACE --------------------------------------------- */
+.workspace { grid-area: main; position: relative; z-index: 10; }
+.workspace-inner { padding: var(--s-6) var(--s-6) var(--s-8); max-width: 1720px; margin: 0 auto; }
+.shell.has-intel .workspace-inner { padding-right: var(--s-4); }
+.screen { min-height: 100%; }
+
+/* ---- INTELLIGENCE RAIL ------------------------------------- */
+.intel {
+  grid-area: intel; position: relative; z-index: 15;
+  display: flex; flex-direction: column; gap: var(--s-4);
+  padding: var(--s-6) var(--s-5) var(--s-8) 0;
+}
+
+/* ---- TELEMETRY STRIP --------------------------------------- */
+.telebar {
+  grid-area: tele; z-index: 20;
+  display: flex; align-items: center; gap: var(--s-3);
+  padding: 0 var(--s-5);
+  border-top: 1px solid var(--vx-hair);
+  background: linear-gradient(180deg, rgba(6,9,20,0.7), rgba(6,9,20,0.94));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.tb-sep { width: 1px; height: 10px; background: var(--vx-hair-str); flex: none; }
+
+/* ---- MOBILE ------------------------------------------------ */
+.mnav {
+  grid-area: mnav; z-index: 30; min-height: 0;
+  margin-bottom: calc(var(--s-3) + env(safe-area-inset-bottom, 0px));
+  display: grid; grid-auto-flow: column; grid-auto-columns: 1fr;
+  align-items: center; margin-left: var(--s-3); margin-right: var(--s-3);
+  border-radius: var(--r-5); padding: var(--s-2) var(--s-1);
+}
+.mnav-item {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  padding: var(--s-2) 0; color: var(--vx-t3); font-size: 9.5px; letter-spacing: 0.04em;
+  border-radius: var(--r-3);
+}
+.mnav-item.is-active { color: var(--vx-t1); background: linear-gradient(180deg, rgba(138,92,255,0.24), rgba(138,92,255,0.05)); }
+
+.sheet-scrim {
+  position: fixed; inset: 0; z-index: 60; background: rgba(2,3,10,0.72);
+  backdrop-filter: blur(6px); display: flex; align-items: flex-end;
+}
+.sheet { width: 100%; border-radius: var(--r-5) var(--r-5) 0 0; padding: var(--s-4) var(--s-4) var(--s-7); }
+.sheet-grab { width: 42px; height: 4px; border-radius: var(--r-full); background: var(--vx-hair-str); margin: 0 auto var(--s-5); }
+.sheet-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--s-2); }
+.sheet-item {
+  display: flex; flex-direction: column; gap: 3px; align-items: flex-start;
+  padding: var(--s-3) var(--s-4); color: var(--vx-t2);
+}
+.sheet-item.is-active { color: var(--vx-t1); border-color: var(--vx-hair-hot); }
+
+/* ---- RESPONSIVE ------------------------------------------- */
+@media (max-width: 1560px) {
+  /* the ticker becomes a scroller here: fade the trailing edge so a
+     cut-off chip reads as "there is more", not as a layout break */
+  .cmdbar-center {
+    justify-content: flex-start;
+    -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 34px), transparent 100%);
+    mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 34px), transparent 100%);
+  }
+  .mchip .spark { display: none; }
+  .mchip { height: 30px; padding: 0 var(--s-3); }
+}
+@media (max-width: 1180px) {
+  .rail-label { font-size: 9px; }
+  :root { --rail-w: 94px; }
+  .workspace-inner { padding: var(--s-5) var(--s-4) var(--s-8); }
+}
+@media (max-width: 860px) {
+  .workspace-inner { padding: var(--s-4) var(--s-4) var(--s-9); }
+  .cmdbar { grid-template-columns: auto minmax(0, 1fr) auto; padding: 0 var(--s-3); gap: var(--s-3); }
+}

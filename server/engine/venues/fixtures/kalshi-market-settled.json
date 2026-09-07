@@ -1,0 +1,30 @@
+{
+ "capturedAt": "2026-09-06T19:50:00Z",
+ "source": "kalshi trade-api v2 /markets?limit=1&status=settled (captured live)",
+ "market": {
+  "ticker": "KXMVECROSSCATEGORY-SHARD1-S2026F7269E3402A-28B8FC29C74",
+  "event_ticker": "KXMVECROSSCATEGORY-SHARD1-S2026F7269E3402A",
+  "market_type": "binary",
+  "title": "yes Target Price: $2,492.07,yes 8+ corners,yes Over 2.5 goals scored,yes Over 1.5 goals scored",
+  "yes_sub_title": "yes Target Price: $2,492.07,yes 8+ corners,yes Over 2.5 goals scored,yes Over 1.5 goals scored",
+  "status": "finalized",
+  "open_time": "2026-09-06T19:43:49Z",
+  "close_time": "2026-09-06T19:45:05Z",
+  "expiration_time": "2026-09-09T01:00:00Z",
+  "expected_expiration_time": "2026-09-07T01:00:00Z",
+  "last_price_dollars": "0.0009",
+  "yes_bid_dollars": "0.0000",
+  "yes_ask_dollars": "1.0000",
+  "no_bid_dollars": "0.0000",
+  "no_ask_dollars": "1.0000",
+  "volume_fp": "5000.00",
+  "volume_24h_fp": "0.00",
+  "open_interest_fp": "5000.00",
+  "liquidity_dollars": "0.0000",
+  "result": "no",
+  "settlement_ts": "2026-09-06T19:45:15.494086Z",
+  "settlement_value_dollars": "0.0000",
+  "rules_primary": "",
+  "updated_time": "2026-09-06T19:45:15.541064Z"
+ }
+}

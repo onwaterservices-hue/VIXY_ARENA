@@ -1,0 +1,194 @@
+/* =============================================================
+   VIXY ARENA — MATERIAL SYSTEM
+   Three glass grades + the holographic layer. Every surface in
+   the product is one of these. Nothing improvises.
+   ============================================================= */
+
+/* ---- GLASS 01 — quiet surface (rows, chips, inputs) -------- */
+.glass-01 {
+  position: relative;
+  background: var(--glass-01-bg);
+  border: 1px solid var(--vx-hair);
+  border-radius: var(--r-3);
+  backdrop-filter: blur(var(--glass-01-blur)) saturate(130%);
+  -webkit-backdrop-filter: blur(var(--glass-01-blur)) saturate(130%);
+}
+
+/* ---- GLASS 02 — the standard panel ------------------------- */
+.glass-02 {
+  position: relative;
+  background: var(--glass-02-bg);
+  border: 1px solid var(--vx-hair);
+  border-radius: var(--r-4);
+  backdrop-filter: blur(var(--glass-02-blur)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--glass-02-blur)) saturate(140%);
+  box-shadow: var(--lift-2);
+}
+/* internal top highlight — the "polished edge" */
+.glass-02::before, .glass-03::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(180deg, rgba(255,255,255,0.075), rgba(255,255,255,0) 26%);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+}
+
+/* ---- GLASS 03 — active / holographic panel ----------------- */
+.glass-03 {
+  position: relative;
+  background: var(--glass-03-bg);
+  border: 1px solid var(--vx-hair-hot);
+  border-radius: var(--r-4);
+  backdrop-filter: blur(var(--glass-03-blur)) saturate(150%);
+  -webkit-backdrop-filter: blur(var(--glass-03-blur)) saturate(150%);
+  box-shadow: var(--lift-3), 0 0 44px -18px rgba(138,92,255,0.55);
+}
+
+/* ---- CORNER BRACKETS — technical geometry ------------------ */
+.brackets > .bk {
+  position: absolute; width: 12px; height: 12px; pointer-events: none;
+  border-color: var(--vx-hair-str); opacity: 0.9;
+}
+.brackets > .bk-tl { top: -1px; left: -1px;  border-top: 1px solid; border-left: 1px solid;
+                     border-top-left-radius: var(--r-4); }
+.brackets > .bk-tr { top: -1px; right: -1px; border-top: 1px solid; border-right: 1px solid;
+                     border-top-right-radius: var(--r-4); }
+.brackets > .bk-bl { bottom: -1px; left: -1px;  border-bottom: 1px solid; border-left: 1px solid;
+                     border-bottom-left-radius: var(--r-4); }
+.brackets > .bk-br { bottom: -1px; right: -1px; border-bottom: 1px solid; border-right: 1px solid;
+                     border-bottom-right-radius: var(--r-4); }
+.holo-live .bk { border-color: var(--vx-hair-hot); }
+
+/* ---- SCAN SWEEP — only on analyzing surfaces --------------- */
+.scan-sweep { position: absolute; inset: 0; overflow: hidden; border-radius: inherit;
+              pointer-events: none; }
+.scan-sweep::after {
+  content: ""; position: absolute; left: 0; right: 0; height: 34%;
+  background: linear-gradient(180deg, transparent, rgba(138,92,255,0.11) 46%, rgba(55,228,245,0.10) 52%, transparent);
+  animation: sweep 4.8s var(--ease) infinite;
+}
+@keyframes sweep { 0% { transform: translateY(-120%); } 60%,100% { transform: translateY(340%); } }
+
+/* ---- PANEL HEADER ------------------------------------------ */
+.panel-head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--s-3); padding: var(--s-4) var(--s-5);
+  border-bottom: 1px solid var(--vx-hair);
+}
+.panel-body { padding: var(--s-5); }
+
+/* ---- INTERACTIVE PHYSICS ----------------------------------- */
+.tap { transition: transform var(--m-fast) var(--ease), box-shadow var(--m-base) var(--ease),
+                   border-color var(--m-base) var(--ease), background-color var(--m-base) var(--ease); }
+.tap:active { transform: translateY(0.5px) scale(0.994); }
+
+.lift { transition: transform var(--m-base) var(--ease-out), box-shadow var(--m-base) var(--ease-out),
+                    border-color var(--m-base) var(--ease); }
+.lift:hover { transform: translateY(-2px); border-color: var(--vx-hair-hot); box-shadow: var(--lift-3); }
+
+/* Light reflection that tracks the pointer (set via --mx/--my) */
+.sheen::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  opacity: 0; transition: opacity var(--m-base) var(--ease);
+  background: radial-gradient(220px 160px at var(--mx, 50%) var(--my, 0%),
+              rgba(178,140,255,0.16), transparent 70%);
+}
+.sheen:hover::after { opacity: 1; }
+
+/* ---- STATUS PILL ------------------------------------------- */
+.pill {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  height: 24px; padding: 0 var(--s-3);
+  border-radius: var(--r-full); border: 1px solid var(--vx-hair);
+  background: rgba(10,14,32,0.6);
+  font-family: var(--font-mono); font-size: var(--t-nano);
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--vx-t2);
+  white-space: nowrap;
+}
+.pill .dot { width: 6px; height: 6px; border-radius: var(--r-full); background: currentColor; flex: none; }
+.pill-live    { color: var(--vx-edge);    border-color: rgba(43,232,165,0.32);  background: rgba(43,232,165,0.07); }
+.pill-degrade { color: var(--vx-warn);    border-color: rgba(255,176,32,0.32);  background: rgba(255,176,32,0.07); }
+.pill-stale   { color: var(--vx-warn);    border-color: rgba(255,176,32,0.24); }
+.pill-offline { color: var(--vx-risk);    border-color: rgba(255,84,112,0.34);  background: rgba(255,84,112,0.07); }
+.pill-unknown { color: var(--vx-neutral); border-color: var(--vx-hair); }
+.pill-violet  { color: var(--vx-violet-hi); border-color: rgba(138,92,255,0.38); background: rgba(138,92,255,0.10); }
+.pill-cyan    { color: var(--vx-cyan);    border-color: rgba(55,228,245,0.30);  background: rgba(55,228,245,0.07); }
+
+.pulse-dot { animation: pulseDot 2.4s ease-in-out infinite; }
+@keyframes pulseDot { 0%,100% { opacity: 1; box-shadow: 0 0 0 0 currentColor; }
+                      50% { opacity: 0.55; box-shadow: 0 0 0 3px rgba(255,255,255,0); } }
+
+/* ---- BUTTONS ----------------------------------------------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--s-2);
+  height: 34px; padding: 0 var(--s-4); border-radius: var(--r-3);
+  border: 1px solid var(--vx-hair-str); background: rgba(18,24,52,0.6);
+  color: var(--vx-t1); font-size: var(--t-small); font-weight: 560;
+  letter-spacing: 0.01em;
+}
+.btn:hover { border-color: var(--vx-hair-hot); background: rgba(30,26,68,0.72); }
+.btn-primary {
+  border-color: transparent; color: #fff;
+  background: linear-gradient(135deg, var(--vx-violet) 0%, var(--vx-violet-lo) 55%, var(--vx-blue) 130%);
+  box-shadow: 0 10px 30px -14px rgba(138,92,255,0.9), inset 0 1px 0 rgba(255,255,255,0.22);
+}
+.btn-primary:hover { filter: brightness(1.09); }
+.btn-ghost { background: transparent; border-color: var(--vx-hair); color: var(--vx-t2); }
+.btn-sm { height: 27px; padding: 0 var(--s-3); font-size: var(--t-micro); }
+.icon-btn {
+  width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center;
+  border-radius: var(--r-3); border: 1px solid var(--vx-hair); background: rgba(14,18,40,0.5);
+  color: var(--vx-t2);
+}
+.icon-btn:hover { color: var(--vx-t1); border-color: var(--vx-hair-hot); background: rgba(30,26,68,0.7); }
+
+/* ---- SEGMENTED CONTROL ------------------------------------- */
+.seg { display: inline-flex; padding: 3px; gap: 2px; border-radius: var(--r-3);
+       border: 1px solid var(--vx-hair); background: rgba(8,11,26,0.7); }
+.seg button {
+  padding: 0 var(--s-3); height: 24px; border-radius: var(--r-2);
+  font-family: var(--font-mono); font-size: var(--t-nano); letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--vx-t3);
+  transition: color var(--m-fast) var(--ease), background var(--m-fast) var(--ease);
+}
+.seg button:hover:not(:disabled) { color: var(--vx-t1); }
+/* an option the connected provider cannot serve reads as unavailable
+   rather than as a choice that quietly does nothing */
+.seg button:disabled { color: var(--vx-t4); opacity: 0.45; cursor: not-allowed; }
+.seg button[aria-pressed="true"] {
+  color: var(--vx-t1);
+  background: linear-gradient(180deg, rgba(138,92,255,0.30), rgba(138,92,255,0.14));
+  box-shadow: inset 0 0 0 1px rgba(138,92,255,0.42);
+}
+
+/* ---- METERS ------------------------------------------------ */
+.meter { position: relative; height: 4px; border-radius: var(--r-full);
+         background: rgba(160,172,255,0.10); overflow: hidden; }
+.meter > i { position: absolute; inset: 0 auto 0 0; border-radius: inherit; display: block;
+             background: linear-gradient(90deg, var(--vx-violet), var(--vx-cyan));
+             transition: width var(--m-slow) var(--ease-out); }
+.meter-edge > i { background: linear-gradient(90deg, var(--vx-edge), var(--vx-cyan)); }
+.meter-warn > i { background: linear-gradient(90deg, var(--vx-warn), var(--vx-risk)); }
+
+/* ---- HOLOGRAPHIC SKELETON ---------------------------------- */
+.skel { position: relative; overflow: hidden; border-radius: var(--r-2);
+        background: rgba(160,172,255,0.06); }
+.skel::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(138,92,255,0.20), transparent);
+  animation: skelSweep 1.6s linear infinite;
+}
+@keyframes skelSweep { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
+
+/* ---- DATA UPDATE PULSE (never flash the whole screen) ------ */
+.tick { animation: tick var(--m-slow) var(--ease-out); }
+@keyframes tick { from { color: var(--vx-cyan); } to { color: inherit; } }
+
+/* ---- ENTRY ------------------------------------------------- */
+.enter { animation: enter var(--m-slow) var(--ease-out) both; }
+@keyframes enter { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.enter-row { animation: enterRow var(--m-base) var(--ease-out) both; }
+@keyframes enterRow { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .scan-sweep::after, .pulse-dot, .skel::after { animation: none !important; }
+  .enter, .enter-row, .tick { animation: none !important; }
+}
